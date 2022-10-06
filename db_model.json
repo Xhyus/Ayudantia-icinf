@@ -1,0 +1,87 @@
+{
+    "products": {
+        "name": {
+            "type": "String",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 100
+        },
+        "price": {
+            "type": "Number",
+            "required": true
+        },
+        "quantity": {
+            "type": "Number",
+            "required": true
+        },
+        "description": {
+            "type": "String",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 100
+        },
+        "categories": {
+            "type": "Schema.ObjectId",
+            "ref": "Category",
+            "required": true
+        },
+        "status": {
+            "type": "Schema.ObjectId",
+            "ref": "Status"
+        }
+    },
+    "categories": {
+        "name": {
+            "type": "String",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 100
+        }
+    },
+    "status": {
+        "name": {
+            "type": "String",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 100,
+            "enum": [
+                "active",
+                "inactive"
+            ]
+        }
+    },
+    "users": {
+        "name": {
+            "type": "String",
+            "required": true
+        },
+        "email": {
+            "type": "String",
+            "required": true
+        },
+        "password": {
+            "type": "String",
+            "required": true
+        },
+        "role": {
+            "type": "String",
+            "enum": [
+                "admin",
+                "user"
+            ],
+            "default": "user"
+        },
+        "cart": {
+            "type": "Schema.ObjectId",
+            "ref": "Cart"
+        }
+    },
+    "cart": {
+        "products": {
+            "type": [
+                "Schema.ObjectId"
+            ],
+            "ref": "Product"
+        }
+    }
+}

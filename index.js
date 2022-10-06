@@ -5,6 +5,12 @@ const dotenv = require('dotenv');
 const app = express();
 dotenv.config();
 
+const productRoutes = require('./routes/productRoutes');
+app.use(cors());
+app.use(express.json());
+app.options('*', cors());
+app.use('/api', productRoutes);
+
 const options = {
     useNewUrlParser: true,
     autoIndex: true,
