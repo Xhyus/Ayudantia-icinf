@@ -6,10 +6,12 @@ const app = express();
 dotenv.config();
 
 const productRoutes = require('./routes/productRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 app.use(cors());
 app.use(express.json());
 app.options('*', cors());
 app.use('/api', productRoutes);
+app.use('/api', categoryRoutes);
 
 const options = {
     useNewUrlParser: true,

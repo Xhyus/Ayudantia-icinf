@@ -1,12 +1,13 @@
 const Product = require('../models/product');
 
 const createProduct = (req, res) => {
-    const { name, price, quantity, description } = req.body
+    const { name, price, quantity, description, category } = req.body
     const newProduct = new Product({
         name,
         price,
         quantity,
-        description
+        description,
+        category
     })
     newProduct.save((error, product) => {
         if (error) {

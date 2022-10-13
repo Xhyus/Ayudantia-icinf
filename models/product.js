@@ -20,11 +20,11 @@ const productSchema = new Schema({
         required: true,
         minLenght: 1,
         maxLenght: 250
-    }
-    // categories: {
-    //     type: [Schema.ObjectId],
-    //     ref: 'Category',
-    // },
+    },
+    category: {
+        type: [Schema.ObjectId],
+        ref: 'Category',
+    },
 
 })
 

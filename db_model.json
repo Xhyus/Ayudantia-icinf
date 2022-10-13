@@ -30,7 +30,7 @@
             "ref": "Status"
         }
     },
-    "categories": {
+    "category": {
         "name": {
             "type": "String",
             "required": true,
