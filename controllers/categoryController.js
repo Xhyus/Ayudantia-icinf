@@ -11,9 +11,6 @@ const createCategory = (req, res) => {
         if (error) {
             return res.status(400).send({ message: "No se ha podido crear la categoria" })
         }
-        if (id === undefined || id === null || id === '') {
-            return res.status(201).send(category)
-        }
         Product.updateOne({ _id: id }, { $push: { category: category._id } }, (error, product) => {
             if (error) {
                 return res.status(400).send({ message: "No se pudo actualizar el producto" })
@@ -21,7 +18,7 @@ const createCategory = (req, res) => {
             if (!product) {
                 return res.status(404).send({ message: "No se encontro el producto" })
             }
-            return res.status(200).send({ message: "Producto modificado" })
+            return res.status(200).send(category)
         })
     })
 }

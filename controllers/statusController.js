@@ -1,13 +1,23 @@
 const Status = require('../models/status');
+const Product = require('../models/product');
 
 const createStatus = async (req, res) => {
     const { name } = req.body;
+    const { id } = req.params
     const newStatus = new Status({ name });
     newStatus.save((err, status) => {
         if (err) {
             return res.status(400).send({ message: 'Error al crear el estado' });
         }
-        return res.status(201).send(status);
+        Product.updateOne({ _id: id }, { $push: { status: status._id } }, (err, product) => {
+            if (err) {
+                return res.status(400).send({ message: 'Error al crear el estado' });
+            }
+            if (!product) {
+                return res.status(404).send({ message: 'No se encontró el producto' });
+            }
+            return res.status(201).send(status);
+        })
     })
 }
 

@@ -20,8 +20,7 @@ const userSchema = new Schema({
         enum: [
             'admin',
             'user'
-        ],
-        default: 'user'
+        ]
     },
     cart: {
         type: Schema.Types.ObjectId,

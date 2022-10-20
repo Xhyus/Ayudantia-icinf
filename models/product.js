@@ -21,10 +21,14 @@ const productSchema = new Schema({
         minLenght: 1,
         maxLenght: 250
     },
-    category: {
-        type: [Schema.ObjectId],
-        ref: 'category',
-    },
+    category: [{
+        type: Schema.Types.ObjectId,
+        ref: 'category'
+    }],
+    status: {
+        type: Schema.ObjectId,
+        ref: 'status',
+    }
 
 })
 
