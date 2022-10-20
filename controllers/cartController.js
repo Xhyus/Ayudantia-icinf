@@ -1,6 +1,6 @@
 const Cart = require('../models/cart');
 
-const createCart = async (req, res) => {
+const createCart = (req, res) => {
     const { products } = req.body;
     const newCart = new Cart({ products });
     newCart.save((err, cart) => {
@@ -10,7 +10,7 @@ const createCart = async (req, res) => {
         return res.status(201).send(cart);
     })
 }
-const getCarts = async (req, res) => {
+const getCarts = (req, res) => {
     Cart.find({}, (err, cart) => {
         if (err) {
             return res.status(400).send({ message: 'Error al obtener los carritos' });
@@ -19,7 +19,7 @@ const getCarts = async (req, res) => {
     })
 }
 
-const updateCart = async (req, res) => {
+const updateCart = (req, res) => {
     const { products } = req.body;
     const { id } = req.params;
     Cart.findOneAndUpdate(id, { products }, (err, cart) => {
@@ -33,7 +33,7 @@ const updateCart = async (req, res) => {
     })
 }
 
-const deleteCart = async (req, res) => {
+const deleteCart = (req, res) => {
     const { id } = req.params;
     Cart.findOneAndDelete(id, (err, cart) => {
         if (err) {
@@ -46,7 +46,7 @@ const deleteCart = async (req, res) => {
     })
 }
 
-const getCart = async (req, res) => {
+const getCart = (req, res) => {
     const { id } = req.params;
     Cart.findById(id, (err, cart) => {
         if (err) {
