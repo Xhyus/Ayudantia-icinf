@@ -10,6 +10,7 @@ const categoryRoutes = require('./routes/categoryRoutes');
 const userRoutes = require('./routes/userRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const statusRoutes = require('./routes/statusRoutes');
+const mailerRoutes = require('./routes/mailerRoutes')
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use('/api', categoryRoutes);
 app.use('/api', userRoutes);
 app.use('/api', cartRoutes);
 app.use('/api', statusRoutes);
+app.use('/api', mailerRoutes);
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
