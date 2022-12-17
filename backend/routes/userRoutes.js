@@ -7,6 +7,5 @@ api.get('/users', statusController.getUsers);
 api.get('/user/search/:id', statusController.getUser);
 api.put('/user/update/:id', statusController.updateUser);
 api.delete('/user/delete/:id', statusController.deleteUser);
-api.post('/user/login', statusController.login);
 
 module.exports = api;

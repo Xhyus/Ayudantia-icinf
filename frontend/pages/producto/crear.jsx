@@ -1,83 +1,69 @@
-import { useState } from 'react'
-import { Textarea, Button, Container, Input, Stack, Text, HStack, Heading, FormControl, FormLabel } from '@chakra-ui/react'
-import axios from 'axios'
+import { Button, Container, Stack, Heading } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
 import { createProduct } from '../../data/products'
+import { Formik } from 'formik'
+import FormInput from '../../components/FormInput'
+import productValidation from '../../validations/productValidation'
+import FormikError from '../../components/FormikError'
 
 const productos = () => {
-
-	const [values, setValues] = useState({
-		name: '',
-		price: '',
-		quantity: '',
-		description: ''
-	})
 	const router = useRouter()
-
-	const onSubmit = async (e) => {
-		e.preventDefault()
-		console.log(values)
-		try {
-			const response = await createProduct(values)
-			console.log(response)
-			if (response.status === 201) {
-				Swal.fire({
-					title: 'Producto creado',
-					text: 'El producto se ha creado correctamente',
-					icon: 'success',
-					confirmButtonText: 'Ok'
-				}).then((result) => {
-					router.push('/')
-				})
-
-			} else {
-				Swal.fire({
-					title: 'Error',
-					text: 'Ha ocurrido un error',
-					icon: 'error',
-					confirmButtonText: 'Ok'
-				})
-			}
-		} catch (err) {
-			Swal.fire({
-				title: 'Error',
-				text: 'Ha ocurrido un error',
-				icon: 'error',
-				confirmButtonText: 'Ok'
-			})
-		}
-	}
-
-	const onChange = (e) => {
-		setValues({
-			...values,
-			[e.target.name]: e.target.value
-		})
-	}
-
 	return (
 		<Container maxW="container.md">
 			<Heading textAlign={"center"} my={10}>Crear Productos</Heading>
-			<Stack>
-				<FormControl>
-					<FormLabel>Nombre producto</FormLabel>
-					<Input placeholder="Nombre producto" type={"text"} onChange={onChange} name={"name"} />
-				</FormControl>
-				<FormControl>
-					<FormLabel>Precio</FormLabel>
-					<Input placeholder="Precio" type={"number"} onChange={onChange} name={"price"} />
-				</FormControl>
-				<FormControl>
-					<FormLabel>Stock</FormLabel>
-					<Input placeholder="Stock" type={"number"} onChange={onChange} name={"quantity"} />
-				</FormControl>
-				<FormControl>
-					<FormLabel>Descripción</FormLabel>
-					<Textarea placeholder="Descripción" onChange={onChange} name={"description"} />
-				</FormControl>
-			</Stack>
-			<Button colorScheme="teal" size="md" type="submit" my={5} onClick={onSubmit}> Crear Producto </Button>
+			<Formik
+				initialValues={{
+					name: '',
+					price: '',
+					quantity: '',
+					description: ''
+				}}
+				validationSchema={productValidation}
+				onSubmit={async (values) => {
+					try {
+						const response = await createProduct(values)
+						if (response.status === 201) {
+							Swal.fire({
+								icon: 'success',
+								title: 'Producto creado',
+								text: 'El producto se creo correctamente!',
+							}).then(() => {
+								router.push('/productos')
+							})
+						}
+					} catch (error) {
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'Algo salió mal!',
+						})
+					}
+				}}
+			>
+				{({
+					values,
+					errors,
+					touched,
+					handleChange,
+					handleBlur,
+					handleSubmit
+				}) => (
+					<form onSubmit={handleSubmit} id="form">
+						<Stack>
+							<FormInput onChange={handleChange} placeholder="Nombre" label="Nombre" type={"text"} name={"name"} onBlur={handleBlur} value={values.name} />
+							{touched.name && errors.name && <FormikError error={errors.name} />}
+							<FormInput onChange={handleChange} placeholder="Precio" label="Precio" type={"number"} name={"price"} onBlur={handleBlur} value={values.price} />
+							{touched.price && errors.price && <FormikError error={errors.price} />}
+							<FormInput onChange={handleChange} placeholder="Stock" label="Stock" type={"number"} name={"quantity"} onBlur={handleBlur} value={values.quantity} />
+							{touched.quantity && errors.quantity && <FormikError error={errors.quantity} />}
+							<FormInput onChange={handleChange} placeholder="Descripción" label="Descripción" type={"text"} name={"description"} onBlur={handleBlur} value={values.description} />
+							{touched.description && errors.description && <FormikError error={errors.description} />}
+						</Stack>
+						<Button colorScheme="teal" size="md" type="submit" my={5} onClick={handleSubmit}> Crear Producto </Button>
+					</form>
+				)}
+			</Formik>
 		</Container>
 	)
 }
