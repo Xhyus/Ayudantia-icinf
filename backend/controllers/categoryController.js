@@ -11,7 +11,7 @@ const createCategory = (req, res) => {
         if (err) {
             return res.status(400).send({ message: "Error al crear la categoria" })
         }
-        Product.findByIdAndUpdate(id, { $push: { categories: category._id } }, { new: true }, (err, product) => {
+        Product.findByIdAndUpdate(id, { $push: { category: category._id } }, { new: true }, (err, product) => {
             if (err) {
                 return res.status(400).send({ message: "Error al actualizar el producto" })
             }

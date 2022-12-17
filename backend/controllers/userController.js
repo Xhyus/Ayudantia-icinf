@@ -14,27 +14,6 @@ const createUser = async (req, res) => {
     })
 }
 
-const login = async (req, res) => {
-    const { email, password } = req.body;
-    User.findOne({ email }, (err, user) => {
-        if (err) {
-            return res.status(400).send({ message: 'Error al iniciar sesión' });
-        }
-        if (!user) {
-            return res.status(404).send({ message: 'No se encontró el usuario' });
-        }
-        bcrypt.compare(password, user.password, (err, result) => {
-            if (err) {
-                return res.status(400).send({ message: 'Error al iniciar sesión' });
-            }
-            if (!result) {
-                return res.status(404).send({ message: 'Contraseña incorrecta' });
-            }
-            return res.status(200).send(user);
-        })
-    })
-}
-
 const getUsers = async (req, res) => {
     User.find({}, (err, user) => {
         if (err) {
@@ -90,5 +69,4 @@ module.exports = {
     getUser,
     updateUser,
     deleteUser,
-    login
 }

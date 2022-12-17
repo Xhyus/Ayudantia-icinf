@@ -1,6 +1,7 @@
 const express = require('express');
 const productController = require('../controllers/productController');
 const api = express.Router();
+const checkEmail = require('../middlewares/checkEmail');
 
 api.post('/product', productController.createProduct);
 api.get('/products', productController.getProducts);

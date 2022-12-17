@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const app = express();
+const cookieParser = require('cookie-parser');
 dotenv.config();
 
 const productRoutes = require('./routes/productRoutes');
@@ -13,8 +14,9 @@ const statusRoutes = require('./routes/statusRoutes');
 const mailerRoutes = require('./routes/mailerRoutes')
 const fileRoutes = require('./routes/fileRoutes')
 
-app.use(cors());
 app.use(express.json());
+app.use(cookieParser())
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.options('*', cors());
 app.use('/api', productRoutes);
 app.use('/api', categoryRoutes);
